@@ -77,6 +77,14 @@ public class HtmlBuilder {
             .append("</div>\n");
     }
 
+    public void addLink(String href, String text) {
+        html.append("<a href=\"")
+            .append(href)
+            .append("\">")
+            .append(text)
+            .append("</a>\n");
+    }
+
     public void build() {
         head.append(html);
         head.append("</body>\n");
