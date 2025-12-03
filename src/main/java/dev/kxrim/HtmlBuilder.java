@@ -1,7 +1,11 @@
 package dev.kxrim;
 
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.stream.Stream;
 
 public class HtmlBuilder {
     private final StringBuilder html;
@@ -10,6 +14,8 @@ public class HtmlBuilder {
     private final String lang;
     private final String charset;
     private final String viewport;
+    private static final Path OUTPUT_DIR = Paths.get("generated");
+    private static final Path ASSETS_DIR = OUTPUT_DIR.resolve("assets");
 
     public HtmlBuilder() {
         this("en", "UTF-8", "width=device-width, initial-scale=1.0", "Document");
@@ -122,6 +128,76 @@ public class HtmlBuilder {
             html.append("<li>").append(item).append("</li>\n");
         }
         html.append("</").append(tag).append(">\n");
+    }
+
+    /**
+     * Copy assets from a source directory to the generated/assets folder.
+     * Also fixes image paths in the HTML to point to assets/ directory.
+     * Supports copying from directories like "images/", "img/", "assets/", etc.
+     *
+     * @param sourceDir The source directory containing image files
+     */
+    public void copyAssets(String sourceDir) {
+        try {
+            Path sourcePath = Paths.get(sourceDir);
+            if (!Files.exists(sourcePath) || !Files.isDirectory(sourcePath)) {
+                System.out.println("Source directory does not exist: " + sourceDir);
+                return;
+            }
+
+            Files.createDirectories(ASSETS_DIR);
+
+            try (Stream<Path> files = Files.walk(sourcePath)) {
+                files.filter(Files::isRegularFile)
+                     .filter(p -> {
+                         String name = p.getFileName().toString().toLowerCase();
+                         return name.endsWith(".png") || name.endsWith(".jpg") ||
+                                name.endsWith(".jpeg") || name.endsWith(".gif") ||
+                                name.endsWith(".svg") || name.endsWith(".webp");
+                     })
+                     .forEach(source -> {
+                         try {
+                             Path destination = ASSETS_DIR.resolve(source.getFileName());
+                             Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+                             System.out.println("Copied asset: " + source.getFileName() + " -> assets/");
+                         } catch (IOException e) {
+                             System.err.println("Failed to copy: " + source);
+                         }
+                     });
+            }
+        } catch (IOException e) {
+            System.err.println("Error copying assets: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Add an image using a local file path. Automatically copies the image to assets/
+     * and fixes the path in the HTML.
+     *
+     * @param localPath Path to the local image file (e.g., "images/photo.png")
+     * @param alt Alternative text for the image
+     */
+    public void addLocalImage(String localPath, String alt) {
+        try {
+            Path source = Paths.get(localPath);
+            if (!Files.exists(source)) {
+                System.err.println("Image file not found: " + localPath);
+                addImage(localPath, alt); // Add anyway with original path
+                return;
+            }
+
+            Files.createDirectories(ASSETS_DIR);
+            String fileName = source.getFileName().toString();
+            Path destination = ASSETS_DIR.resolve(fileName);
+            Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+
+            // Use relative path in HTML
+            addImage("assets/" + fileName, alt);
+            System.out.println("Added local image: " + fileName);
+        } catch (IOException e) {
+            System.err.println("Error adding local image: " + e.getMessage());
+            addImage(localPath, alt); // Fallback to original path
+        }
     }
 
     public void build() {
