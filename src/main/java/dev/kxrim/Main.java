@@ -11,7 +11,7 @@ import dev.kxrim.elements.*;
  */
 public class Main {
     private static final String PAGE_TITLE = "HtmlBuilder Full Feature Demonstration";
-    private static final String GITHUB_URL = "https://github.com/KerYagciHTL";
+    private static final String GITHUB_URL = "https://github.com/KerYagciHTL/java-frontend";
     private static final String JAVA_URL = "https://www.java.com";
 
     public static void main(String[] args) {
