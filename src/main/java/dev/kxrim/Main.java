@@ -84,7 +84,7 @@ public class Main {
             "https://media.tenor.com/mSIfEcNYz5QAAAAj/cute.gif",
             "Placeholder Image"
         ));
-        builder.addLocalImage("images/peach.gif", "Company Logo");
+        builder.addLocalImage("images/peach.gif", "GIF");
         builder.copyAssets("images");
     }
 
