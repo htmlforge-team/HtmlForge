@@ -2,57 +2,133 @@ package dev.kxrim;
 
 import dev.kxrim.elements.*;
 
+/**
+ * Main demonstration class showcasing my HtmlBuilder library.
+ * Demonstrates all available HTML elements and their usage patterns.
+ *
+ * @author KerYagciHTL
+ * @version 1.0
+ */
 public class Main {
+    private static final String PAGE_TITLE = "HtmlBuilder Full Feature Demonstration";
+    private static final String GITHUB_URL = "https://github.com/KerYagciHTL";
+    private static final String JAVA_URL = "https://www.java.com";
+
     public static void main(String[] args) {
-        HtmlBuilder htmlBuilder = new HtmlBuilder("HtmlBuilder Full Feature Demonstration");
+        HtmlBuilder builder = new HtmlBuilder(PAGE_TITLE);
 
-        htmlBuilder.addElement(new Heading(1, "HtmlBuilder Feature Showcase"));
-        htmlBuilder.addElement(new Heading(2, "All Available Methods Demonstrated"));
+        buildHeader(builder);
+        buildIntroduction(builder);
+        buildDivExamples(builder);
+        buildButtonExamples(builder);
+        buildLinkExamples(builder);
+        buildImageExamples(builder);
+        buildFormExamples(builder);
+        buildListExamples(builder);
+        buildTextFormattingExamples(builder);
+        buildFooter(builder);
 
-        htmlBuilder.addElement(new Paragraph("This page demonstrates all the features of the HtmlBuilder class."));
+        builder.build();
+    }
 
-        htmlBuilder.addElement(new Div("This is a simple div"));
-        htmlBuilder.addElement(new Div("This is a div with a CSS class", "highlighted"));
+    /**
+     * Builds the page header with main title and subtitle
+     */
+    private static void buildHeader(HtmlBuilder builder) {
+        builder.addElement(new Heading(1, "HtmlBuilder Feature Showcase"));
+        builder.addElement(new Heading(2, "All Available Methods Demonstrated"));
+    }
 
-        htmlBuilder.addElement(new Heading(3, "Buttons"));
-        htmlBuilder.addElement(new Button("Simple Button"));
-        htmlBuilder.addElement(new Button("Click Me", "alert('Hello from HtmlBuilder!')"));
-        htmlBuilder.addElement(new Button("Console Log", "console.log('Button clicked!')"));
+    /**
+     * Builds the introduction section
+     */
+    private static void buildIntroduction(HtmlBuilder builder) {
+        builder.addElement(new Paragraph(
+            "This page demonstrates all the features of the HtmlBuilder class."
+        ));
+    }
 
-        htmlBuilder.addElement(new Heading(3, "Links"));
-        htmlBuilder.addElement(new Link("https://github.com/KerYagciHTL", "Visit GitHub"));
-        htmlBuilder.addElement(new Link("https://www.java.com", "Learn Java"));
+    /**
+     * Demonstrates Div element usage with and without CSS classes
+     */
+    private static void buildDivExamples(HtmlBuilder builder) {
+        builder.addElement(new Div("This is a simple div"));
+        builder.addElement(new Div("This is a div with a CSS class", "highlighted"));
+    }
 
-        htmlBuilder.addElement(new Heading(3, "Images"));
-        htmlBuilder.addElement(new Image("https://media.tenor.com/mSIfEcNYz5QAAAAj/cute.gif", "Placeholder Image"));
+    /**
+     * Demonstrates various button configurations
+     */
+    private static void buildButtonExamples(HtmlBuilder builder) {
+        builder.addElement(new Heading(3, "Buttons"));
+        builder.addElement(new Button("Simple Button"));
+        builder.addElement(new Button("Click Me", "alert('Hello from HtmlBuilder!')"));
+        builder.addElement(new Button("Console Log", "console.log('Button clicked!')"));
+    }
 
-        htmlBuilder.addLocalImage("images/peach.gif", "Company Logo");
-        htmlBuilder.copyAssets("images");
+    /**
+     * Demonstrates link elements
+     */
+    private static void buildLinkExamples(HtmlBuilder builder) {
+        builder.addElement(new Heading(3, "Links"));
+        builder.addElement(new Link(GITHUB_URL, "Visit GitHub"));
+        builder.addElement(new Link(JAVA_URL, "Learn Java"));
+    }
 
-        htmlBuilder.addElement(new Heading(3, "Form Elements"));
-        htmlBuilder.addElement(new Input("text", "username", "Enter your username"));
-        htmlBuilder.addElement(new Input("email", "email", "Enter your email"));
-        htmlBuilder.addElement(new Input("password", "password", "Enter your password"));
-        htmlBuilder.addElement(new Textarea("message", "Enter your message", 5, 40));
+    /**
+     * Demonstrates image handling including remote and local images
+     */
+    private static void buildImageExamples(HtmlBuilder builder) {
+        builder.addElement(new Heading(3, "Images"));
+        builder.addElement(new Image(
+            "https://media.tenor.com/mSIfEcNYz5QAAAAj/cute.gif",
+            "Placeholder Image"
+        ));
+        builder.addLocalImage("images/peach.gif", "Company Logo");
+        builder.copyAssets("images");
+    }
 
-        htmlBuilder.addElement(new Heading(3, "Unordered List"));
-        htmlBuilder.addElement(new ListElement(false, "First item", "Second item", "Third item"));
+    /**
+     * Demonstrates form input elements
+     */
+    private static void buildFormExamples(HtmlBuilder builder) {
+        builder.addElement(new Heading(3, "Form Elements"));
+        builder.addElement(new Input("text", "username", "Enter your username"));
+        builder.addElement(new Input("email", "email", "Enter your email"));
+        builder.addElement(new Input("password", "password", "Enter your password"));
+        builder.addElement(new Textarea("message", "Enter your message", 5, 40));
+    }
 
-        htmlBuilder.addElement(new Heading(3, "Ordered List"));
-        htmlBuilder.addElement(new ListElement(true, "Step one", "Step two", "Step three"));
+    /**
+     * Demonstrates both ordered and unordered lists
+     */
+    private static void buildListExamples(HtmlBuilder builder) {
+        builder.addElement(new Heading(3, "Unordered List"));
+        builder.addElement(new ListElement(false, "First item", "Second item", "Third item"));
 
-        htmlBuilder.addElement(new Heading(3, "Text Formatting"));
-        htmlBuilder.addElement(new Heading(4, "Subheading"));
-        htmlBuilder.addElement(new Heading(5, "Smaller subheading"));
-        htmlBuilder.addElement(new Heading(6, "Smallest heading"));
-        htmlBuilder.addElement(new BlockQuote("This is a quote using BlockQuote element"));
-        htmlBuilder.addElement(new Code("const x = 42;"));
-        htmlBuilder.addElement(new Strong("Bold text"));
-        htmlBuilder.addElement(new Emphasis("Italic text"));
+        builder.addElement(new Heading(3, "Ordered List"));
+        builder.addElement(new ListElement(true, "Step one", "Step two", "Step three"));
+    }
 
-        htmlBuilder.addElement(new HorizontalRule());
-        htmlBuilder.addElement(new Paragraph("Built with ❤️ using HtmlBuilder"));
+    /**
+     * Demonstrates various text formatting elements
+     */
+    private static void buildTextFormattingExamples(HtmlBuilder builder) {
+        builder.addElement(new Heading(3, "Text Formatting"));
+        builder.addElement(new Heading(4, "Subheading"));
+        builder.addElement(new Heading(5, "Smaller subheading"));
+        builder.addElement(new Heading(6, "Smallest heading"));
+        builder.addElement(new BlockQuote("This is a quote using BlockQuote element"));
+        builder.addElement(new Code("const x = 42;"));
+        builder.addElement(new Strong("Bold text"));
+        builder.addElement(new Emphasis("Italic text"));
+    }
 
-        htmlBuilder.build();
+    /**
+     * Builds the page footer
+     */
+    private static void buildFooter(HtmlBuilder builder) {
+        builder.addElement(new HorizontalRule());
+        builder.addElement(new Paragraph("Built with ❤️ using HtmlBuilder"));
     }
 }
