@@ -133,6 +133,8 @@ Because writing HTML in Java strings sucks. This way you get:
 - Easier to read and modify
 
 ## Contributing
+- Kerimcan Yagci
+- Nico Haider
 
 If you want to add more elements or fix something, go for it. The code is pretty straightforward. Just make sure to test your changes before submitting.
 
