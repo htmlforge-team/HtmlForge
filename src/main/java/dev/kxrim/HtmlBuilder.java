@@ -66,6 +66,11 @@ public class HtmlBuilder {
         return this;
     }
 
+    public HtmlBuilder addText(String text) {
+        html.append(text);
+        return this;
+    }
+
     // Fluent API methods
     public HtmlBuilder heading(int level, String text) {
         return addElement(new Heading(level, text));
