@@ -2,6 +2,34 @@
 
 A Java library that makes building HTML way easier. Tired of writing HTML as strings? Yeah, me too.
 
+## Installation
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>io.github.keryagcihtl</groupId>
+    <artifactId>htmlForge</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### Gradle
+
+```groovy
+dependencies {
+    implementation 'io.github.keryagcihtl:htmlforge:1.0.0'
+}
+```
+
+### Gradle (Kotlin DSL)
+
+```kotlin
+dependencies {
+    implementation("io.github.keryagcihtl:htmlforge:1.0.0")
+}
+```
+
 ## What's this?
 
 If you're a backend developer who's ever had to write HTML, you know the pain. String concatenation everywhere, escaped quotes making your eyes hurt, and messy code that's impossible to maintain. HtmlForge changes the game! Just create objects for your HTML elements, compose them together, and you're done. Clean, readable, and actually enjoyable to work with.
