@@ -26,7 +26,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.github.keryagcihtl:htmlforge:1.0.0")
+    implementation("io.github.keryagcihtl:htmlforge:0.1.0")
 }
 ```
 
