@@ -14,7 +14,7 @@ class Colors:
 
 def print_header():
     print(f"{Colors.BLUE}╔════════════════════════════════════════╗{Colors.NC}")
-    print(f"{Colors.BLUE}║   HtmlForge Theme Generator Script    ║{Colors.NC}")
+    print(f"{Colors.BLUE}║   HtmlForge Theme Generator Script     ║{Colors.NC}")
     print(f"{Colors.BLUE}╚════════════════════════════════════════╝{Colors.NC}")
     print()
 
