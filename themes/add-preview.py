@@ -89,170 +89,40 @@ def create_backup(filename):
         sys.exit(1)
 
 
-def generate_preview_styles(theme_name_lower, theme_css):
-    """Generate CSS styles for theme preview"""
-    # Basic CSS parsing to extract colors and styles
-    styles = f"""
-        /* {theme_name_lower.title()} Preview Styles */
-        .{theme_name_lower}-preview {{"""
-
-    # Try to extract background color
-    if 'background-color:' in theme_css or 'background:' in theme_css:
-        # Simple extraction - look for body background
-        lines = theme_css.split('\n')
-        in_body = False
-        for line in lines:
-            if 'body' in line and '{' in line:
-                in_body = True
-            if in_body:
-                if 'background-color:' in line:
-                    bg_color = line.split('background-color:')[1].split(';')[0].strip()
-                    styles += f"\n            background: {bg_color};"
-                    in_body = False
-                    break
-                elif 'background:' in line and 'linear-gradient' not in line and 'radial-gradient' not in line:
-                    bg_color = line.split('background:')[1].split(';')[0].strip()
-                    styles += f"\n            background: {bg_color};"
-                    in_body = False
-                    break
-
-    # Extract color for text
-    if 'color:' in theme_css:
-        lines = theme_css.split('\n')
-        in_body = False
-        for line in lines:
-            if 'body' in line and '{' in line:
-                in_body = True
-            if in_body and 'color:' in line and 'background-color' not in line:
-                text_color = line.split('color:')[1].split(';')[0].strip()
-                styles += f"\n            color: {text_color};"
-                break
-
-    # Try to extract font-family
-    if 'font-family:' in theme_css:
-        lines = theme_css.split('\n')
-        in_body = False
-        for line in lines:
-            if 'body' in line and '{' in line:
-                in_body = True
-            if in_body and 'font-family:' in line:
-                font = line.split('font-family:')[1].split(';')[0].strip()
-                styles += f"\n            font-family: {font};"
-                break
-
-    styles += "\n        }"
-
-    # Add h1 styles
-    styles += f"\n\n        .{theme_name_lower}-preview h1 {{"
-    if 'h1' in theme_css:
-        lines = theme_css.split('\n')
-        in_h1 = False
-        for line in lines:
-            if 'h1' in line and '{' in line:
-                in_h1 = True
-            if in_h1:
-                if 'color:' in line:
-                    color = line.split('color:')[1].split(';')[0].strip()
-                    styles += f"\n            color: {color};"
-                if 'border-bottom:' in line:
-                    border = line.split('border-bottom:')[1].split(';')[0].strip()
-                    styles += f"\n            border-bottom: {border};"
-                if 'padding-bottom:' in line:
-                    padding = line.split('padding-bottom:')[1].split(';')[0].strip()
-                    styles += f"\n            padding-bottom: {padding};"
-                if 'font-size:' in line:
-                    in_h1 = False
-
-    styles += "\n            font-size: 1.8em;"
-    styles += "\n            margin-bottom: 15px;"
-    styles += "\n        }"
-
-    # Add paragraph styles
-    styles += f"\n\n        .{theme_name_lower}-preview p {{"
-    if ' p {' in theme_css or ' p{' in theme_css:
-        lines = theme_css.split('\n')
-        in_p = False
-        for line in lines:
-            if ' p ' in line and '{' in line:
-                in_p = True
-            if in_p and 'color:' in line:
-                color = line.split('color:')[1].split(';')[0].strip()
-                styles += f"\n            color: {color};"
-                break
-
-    styles += "\n            margin: 12px 0;"
-    styles += "\n        }"
-
-    # Add button styles
-    styles += f"\n\n        .{theme_name_lower}-preview button {{"
-    if 'button' in theme_css:
-        lines = theme_css.split('\n')
-        in_button = False
-        for line in lines:
-            if 'button' in line and '{' in line:
-                in_button = True
-            if in_button:
-                if 'background:' in line or 'background-color:' in line:
-                    key = 'background:' if 'background:' in line else 'background-color:'
-                    bg = line.split(key)[1].split(';')[0].strip()
-                    styles += f"\n            background: {bg};"
-                if 'color:' in line and 'background' not in line:
-                    color = line.split('color:')[1].split(';')[0].strip()
-                    styles += f"\n            color: {color};"
-                if 'border:' in line:
-                    border = line.split('border:')[1].split(';')[0].strip()
-                    styles += f"\n            border: {border};"
-                if 'padding:' in line:
-                    padding = line.split('padding:')[1].split(';')[0].strip()
-                    styles += f"\n            padding: {padding};"
-                if 'border-radius:' in line:
-                    radius = line.split('border-radius:')[1].split(';')[0].strip()
-                    styles += f"\n            border-radius: {radius};"
-                if 'font-family:' in line:
-                    font = line.split('font-family:')[1].split(';')[0].strip()
-                    styles += f"\n            font-family: {font};"
-                    in_button = False
-
-    styles += "\n            cursor: pointer;"
-    styles += "\n            margin-top: 10px;"
-    styles += "\n        }"
-
-    # Add div styles
-    styles += f"\n\n        .{theme_name_lower}-preview .demo-div {{"
-    if 'div' in theme_css:
-        lines = theme_css.split('\n')
-        in_div = False
-        for line in lines:
-            if 'div' in line and '{' in line:
-                in_div = True
-            if in_div:
-                if 'background:' in line or 'background-color:' in line:
-                    key = 'background:' if 'background:' in line else 'background-color:'
-                    bg = line.split(key)[1].split(';')[0].strip()
-                    styles += f"\n            background: {bg};"
-                if 'border-left:' in line:
-                    border = line.split('border-left:')[1].split(';')[0].strip()
-                    styles += f"\n            border-left: {border};"
-                if 'padding:' in line:
-                    padding = line.split('padding:')[1].split(';')[0].strip()
-                    styles += f"\n            padding: {padding};"
-                if 'border-radius:' in line:
-                    radius = line.split('border-radius:')[1].split(';')[0].strip()
-                    styles += f"\n            border-radius: {radius};"
-                    in_div = False
-
-    styles += "\n            margin-top: 15px;"
-    styles += "\n        }"
-
-    return styles
+def generate_preview_iframe_content(theme_name, theme_css):
+    """Generate a complete HTML page for iframe preview"""
+    html_content = f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+{theme_css}
+    </style>
+</head>
+<body>
+    <h1>{theme_name} Theme</h1>
+    <p>Experience the beautiful styling of this theme.</p>
+    <button>Click Me</button>
+    <div class="highlighted">
+        <p>This is a highlighted section with custom styling.</p>
+    </div>
+</body>
+</html>"""
+    return html_content
 
 
 def generate_theme_card_html(theme_key, theme_data):
-    """Generate HTML for a theme preview card"""
+    """Generate HTML for a theme preview card with iframe"""
     theme_name = theme_data.get('name', theme_key)
     theme_description = theme_data.get('description', 'No description available')
     theme_tags = theme_data.get('tags', [])
-    theme_name_lower = theme_name.lower().replace(' ', '').replace('-', '')
+    theme_css = theme_data.get('css', '')
+
+    # Generate iframe content
+    iframe_content = generate_preview_iframe_content(theme_name, theme_css)
+    # Base64 encode for data URL
+    import base64
+    iframe_data = base64.b64encode(iframe_content.encode('utf-8')).decode('utf-8')
 
     tags_html = '\n                        '.join(
         [f'<span class="theme-tag">{tag}</span>' for tag in theme_tags]
@@ -262,14 +132,12 @@ def generate_theme_card_html(theme_key, theme_data):
             <!-- {theme_name} Theme -->
             <div class="theme-card">
                 <div class="theme-preview">
-                    <div class="theme-preview-content {theme_name_lower}-preview">
-                        <h1>{theme_name} Theme</h1>
-                        <p>A {theme_description.split('.')[0].lower()}</p>
-                        <button>Click Me</button>
-                        <div class="demo-div">
-                            <p>Styled div element</p>
-                        </div>
-                    </div>
+                    <iframe 
+                        class="theme-preview-iframe" 
+                        srcdoc="{iframe_content.replace('"', '&quot;')}"
+                        sandbox="allow-same-origin"
+                        scrolling="no"
+                    ></iframe>
                 </div>
                 <div class="theme-info">
                     <h2>{theme_name}</h2>
@@ -294,36 +162,46 @@ def update_index_html(themes):
         with open('index.html', 'r') as f:
             html_content = f.read()
 
-        # Generate preview styles for all themes
-        all_preview_styles = ""
-        for theme_key, theme_data in themes.items():
-            theme_css = theme_data.get('css', '')
-            theme_name_lower = theme_data.get('name', theme_key).lower().replace(' ', '').replace('-', '')
-            preview_styles = generate_preview_styles(theme_name_lower, theme_css)
-            all_preview_styles += preview_styles + "\n"
+        # Add iframe styles if not present
+        iframe_styles = """
+        /* Theme Preview Iframe Styles - Auto-generated */
+        .theme-preview-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background: white;
+        }
+        /* End Theme Preview Iframe Styles */"""
 
-        # Find the position to insert preview styles (before closing </style>)
+        # Find the position to insert iframe styles (before closing </style>)
         style_end_pos = html_content.rfind('</style>')
         if style_end_pos == -1:
             print_error("Error: Could not find </style> tag in index.html")
             return False
 
-        # Check if preview styles already exist and remove them
-        # Look for comment markers
-        preview_start_marker = "/* Theme Preview Styles - Auto-generated */"
-        preview_end_marker = "/* End Theme Preview Styles */"
+        # Check if iframe styles already exist and remove them
+        iframe_start_marker = "/* Theme Preview Iframe Styles - Auto-generated */"
+        iframe_end_marker = "/* End Theme Preview Iframe Styles */"
 
-        preview_start = html_content.find(preview_start_marker)
-        if preview_start != -1:
-            preview_end = html_content.find(preview_end_marker)
-            if preview_end != -1:
-                # Remove old preview styles
-                html_content = html_content[:preview_start] + html_content[preview_end + len(preview_end_marker):]
+        iframe_start = html_content.find(iframe_start_marker)
+        if iframe_start != -1:
+            iframe_end = html_content.find(iframe_end_marker)
+            if iframe_end != -1:
+                # Remove old iframe styles
+                html_content = html_content[:iframe_start] + html_content[iframe_end + len(iframe_end_marker):]
                 style_end_pos = html_content.rfind('</style>')
 
-        # Insert new preview styles
-        new_preview_section = f"\n        {preview_start_marker}\n{all_preview_styles}\n        {preview_end_marker}\n    "
-        html_content = html_content[:style_end_pos] + new_preview_section + html_content[style_end_pos:]
+        # Remove old auto-generated preview styles if they exist
+        old_preview_start = html_content.find("/* Theme Preview Styles - Auto-generated */")
+        if old_preview_start != -1:
+            old_preview_end = html_content.find("/* End Theme Preview Styles */")
+            if old_preview_end != -1:
+                html_content = html_content[:old_preview_start] + html_content[old_preview_end + len("/* End Theme Preview Styles */"):]
+                style_end_pos = html_content.rfind('</style>')
+
+        # Insert iframe styles
+        html_content = html_content[:style_end_pos] + "\n" + iframe_styles + "\n    " + html_content[style_end_pos:]
 
         # Generate theme cards HTML
         all_cards_html = ""
@@ -337,13 +215,17 @@ def update_index_html(themes):
             print_error("Error: Could not find theme-grid div in index.html")
             return False
 
-        grid_end = html_content.find('</div>', grid_start)
         # Find the actual end of theme-grid (need to skip nested divs)
         depth = 1
         pos = grid_start + len('<div class="theme-grid">')
         while depth > 0 and pos < len(html_content):
-            if html_content[pos:pos+5] == '<div ':
-                depth += 1
+            # Check for opening div tag
+            if html_content[pos:pos+4] == '<div':
+                # Make sure it's actually a div tag, not something else
+                next_char = html_content[pos+4:pos+5]
+                if next_char in [' ', '>']:
+                    depth += 1
+            # Check for closing div tag
             elif html_content[pos:pos+6] == '</div>':
                 depth -= 1
                 if depth == 0:
@@ -351,12 +233,13 @@ def update_index_html(themes):
                     break
             pos += 1
 
-        if grid_end == -1:
+        if depth != 0:
             print_error("Error: Could not find end of theme-grid div")
             return False
 
         # Replace the content of theme-grid
         new_grid_content = f'<div class="theme-grid">{all_cards_html}\n        </div>'
+        # Only replace from grid_start to grid_end+6 (grid_end+6 includes </div>)
         html_content = html_content[:grid_start] + new_grid_content + html_content[grid_end + 6:]
 
         # Write updated HTML
@@ -367,6 +250,8 @@ def update_index_html(themes):
 
     except Exception as e:
         print_error(f"Error updating index.html: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
 
