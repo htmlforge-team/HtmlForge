@@ -120,7 +120,7 @@ def generate_theme_card_html(theme_key, theme_data):
 
     # Generate iframe content
     iframe_content = generate_preview_iframe_content(theme_name, theme_css)
-    # Base64 encode for data URL
+    # Base64 encode for data URL to avoid issues with newlines in srcdoc attribute
     import base64
     iframe_data = base64.b64encode(iframe_content.encode('utf-8')).decode('utf-8')
 
@@ -134,7 +134,7 @@ def generate_theme_card_html(theme_key, theme_data):
                 <div class="theme-preview">
                     <iframe 
                         class="theme-preview-iframe" 
-                        srcdoc="{iframe_content.replace('"', '&quot;')}"
+                        src="data:text/html;base64,{iframe_data}"
                         sandbox="allow-same-origin"
                         scrolling="no"
                     ></iframe>
@@ -162,6 +162,13 @@ def update_index_html(themes):
         with open('index.html', 'r') as f:
             html_content = f.read()
 
+        # Update .theme-preview height to 500px
+        preview_style_pattern = '.theme-preview {\n            height: 320px;'
+        preview_style_replacement = '.theme-preview {\n            height: 500px;'
+
+        if preview_style_pattern in html_content:
+            html_content = html_content.replace(preview_style_pattern, preview_style_replacement)
+
         # Add iframe styles if not present
         iframe_styles = """
         /* Theme Preview Iframe Styles - Auto-generated */
@@ -170,7 +177,6 @@ def update_index_html(themes):
             height: 100%;
             border: none;
             display: block;
-            background: white;
         }
         /* End Theme Preview Iframe Styles */"""
 
