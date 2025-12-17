@@ -41,6 +41,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Pages deployment
 - MIT License
 
+## [0.1.1] - 2025-12-17
+
+### Added
+
+- **Theme Gallery** - A collection of pre-built themes available for users to choose from
+- **Routing bug fixes** - Improved handling of relative paths for assets
+- **New organization** - Moved repository to `htmlforge-team` GitHub organization
+
+### Features
+- Same as 0.1.0
+
 ### Links
 - [GitHub Repository](https://github.com/htmlforge-team/HtmlForge)
 - [Theme Gallery](https://htmlforge-team.github.io/HtmlForge/themes)
