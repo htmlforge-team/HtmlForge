@@ -1,6 +1,5 @@
 package team.htmlforge;
 
-import team.htmlforge.elements.*;
 import team.htmlforge.elements.Div;
 
 public class Main {
