@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
         HtmlBuilder builder = new HtmlBuilder(PAGE_TITLE);
 
+        builder.setOutputName("index.html");
         builder.useTheme(Theme.CODIX);
 
         // Using fluent API
