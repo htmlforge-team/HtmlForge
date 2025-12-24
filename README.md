@@ -249,20 +249,18 @@ public class MyElement
 
 ### Prerequisites
 - Java 21 or higher
-- Maven 3.6+
 - Python (for scripts)
 
 ### Build the Project
 
 ```bash
-mvn clean install
+./gradlew build
 ```
 
 ### Run the Example
 
 ```bash
-mvn compile
-mvn exec:java -Dexec.mainClass="team.htmlforge.Main"
+./gradlew run
 ```
 
 Generated HTML will be in the `generated/` folder.
@@ -270,7 +268,7 @@ Generated HTML will be in the `generated/` folder.
 ### Run Tests
 
 ```bash
-mvn test
+./gradlew test
 ```
 
 ---
