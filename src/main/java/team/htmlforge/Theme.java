@@ -7,7 +7,7 @@ public enum Theme {
     MINIMAL_DARK("MinimalDark"),;
 
     private final String themeName;
-    private static final String THEME_JSON_URL = "https://keryagcihtl.github.io/HtmlForge/themes/themes.json";
+    private static final String THEME_JSON_URL = "https://htmlforge-team.github.io/HtmlForge/themes/themes.json";
 
     Theme(String themeName) {
         this.themeName = themeName;
