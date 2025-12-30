@@ -57,6 +57,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Theme Gallery](https://htmlforge-team.github.io/HtmlForge/themes)
 - [Example Site](https://htmlforge-team.github.io/HtmlForge)
 
+## [0.3.3] - 2025-12-30
+
+### Changed
+- Full migration from Java to Kotlin (sources, tests, and build configuration) — see issue #15
+- Updated build to Kotlin JVM plugin and toolchain (JVM 21)
+- Converted all example and test code to Kotlin
+
+---
+
 ## [0.2.2] - 2025-12-24
 
 ### Changed
