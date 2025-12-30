@@ -1,7 +1,9 @@
 <div align="center">
   <img src="assets/htmlforge-icon.png" alt="HtmlForge Logo" width="200"/>
   
-  **A fluent Java library for building HTML programmatically**
+  **A fluent Kotlin library for building HTML programmatically**
+  
+  **Note:** Project migrated from Java to Kotlin — see issue #15 for details.
   
   [![Maven Central](https://img.shields.io/maven-central/v/io.github.htmlforge-team/htmlforge?style=for-the-badge&logo=apache-maven&logoColor=white)](https://central.sonatype.com/artifact/io.github.htmlforge-team/htmlforge)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
