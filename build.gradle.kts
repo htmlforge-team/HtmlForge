@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.htmlforge-team"
-version = "0.2.2"
+version = "0.3.3"
 
 repositories {
     mavenCentral()
