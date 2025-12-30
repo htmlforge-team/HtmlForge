@@ -129,9 +129,9 @@ builder.heading(1, "Beautifully Styled!")
 | **MINIMAL** | Clean, lightweight | Landing pages, simple sites |
 
 **Resources:**
-- [**Theme Gallery**](https://keryagcihtl.github.io/HtmlForge/themes) - Browse themes with live previews
+- [**Theme Gallery**](https://htmlforge-team.github.io/HtmlForge/themes) - Browse themes with live previews
 - [**Create Custom Themes**](themes/README.md) - Full theme documentation
-- [**JSON API**](https://keryagcihtl.github.io/HtmlForge/themes/themes.json) - Theme data endpoint
+- [**JSON API**](https://htmlforge-team.github.io/HtmlForge/themes/themes.json) - Theme data endpoint
 
 ---
 
