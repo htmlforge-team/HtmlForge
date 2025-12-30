@@ -48,7 +48,7 @@ mavenPublishing {
 
     pom {
         name.set("HtmlForge")
-        description.set("A fluent Java library for building HTML programmatically with theme support")
+        description.set("A fluent kotlin library for building HTML programmatically with theme support")
         url.set("https://github.com/htmlforge-team/HtmlForge")
 
         licenses {
